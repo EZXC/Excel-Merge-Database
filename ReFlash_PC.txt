@@ -19,6 +19,9 @@ Sub Reflash_PC()
     reportData = GrapReportUpdateData()
     reportData = ReformatDatabase(reportData, 1, 7, 0, 6, 0)
     laptopCard = GrapLaptopCardData()
+    manUpdate = GrapManualUpdateData()
+    manUpdate = ReformatDatabase(manUpdate, 1, 9, 0, 13, 0)
+
     
     currentData = ImportDatabase(laptopCard, currentData)
     currentData = ImportDatabase(reportData, currentData)
@@ -346,7 +349,31 @@ Private Function SortDatabase(database As Variant)
 
 End Function
 
+Private Function GrapManualUpdateData() As Variant 
 
+    Dim manWorkbook As Workbook
+    Dim manSheet As Worksheet
+    Dim manLastRow As Long
+    Dim manSerialRange As Range
+	
+    ' Set both workbook & worksheet location
+    Set manWorkbook = Workbooks.Open("O:\EZX\PC\Old\Manual Update.xslx")
+    Set manSheet = manWorkbook.Sheets(1) 
+    
+    ' Find the last row based on column A    
+    ' Set the range of the data
+	With manSheet
+		manLastRow = .Cells(.Rows.Count, "A").End(x1Up).Row
+		Set manSerialRange = .Range("A2:M" & manLastRow)
+	End With
+	
+	' Close the report workbook without saving changes
+    manWorkbook.Close SaveChanges:=False
+    
+    'Return data
+    GrapManualUpdateData = manSerialRange.Value
+	
+End Function
 
 
 
