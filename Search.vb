@@ -1,38 +1,24 @@
-Function Search(database As Variant, target As String, identifyDB As String)
+Function Search(tempWorksheet As Worksheet, searchTarget As String, optional targetCol1 as String = "", optional targetCol2 as string = "", optional targetCol3 as string ="")
     
-        Select Case identifyDB
-            '---------Search PC Database-----------
-            Case "PC"
-                For i = LBound(database, 1) To UBound(database, 1)
-                    If database(i, 5) = target Or database(i, 6) = UCase(target) Or database(i, 7) = target Then
-                        Search = i 'skip title row
-                        Exit For
-                    End If
-                Next i
-            '---------Search Monitor Database-----------
-            Case "Monitor"
-                For i = LBound(database, 1) To UBound(database, 1)
-                    If database(i, 2) = UCase(target) Or database(i, 4) = target Then
-                        Search = i 'skip title row
-                        Exit For
-                    End If
-                Next i
-            '---------Search User Database-----------
-            Case "User"
-                For i = LBound(database, 1) To UBound(database, 1)
-                    If database(i, 2) = target Then
-                        Search = i 'skip title row
-                        Exit For
-                    End If
-                Next i
-            '---------Search SNtoPCName Database-----------
-            Case "SNtoPCName"
-                For i = LBound(database, 1) To UBound(database, 1)
-                    If database(i, 1) = target Then
-                        Search = i 'skip title row
-                        Exit For
-                    End If
-                Next i
-        End Select
+		Dim titleRow as integer, lastColumn as integer, i as integer, j as integer
+		Dim targetColumn as Variant
+		titleRow = IdentifyTitleRow(tempWorksheet)
+		lastColumn = identifyLastColumn(tempWorksheet)
+		targetColumn = Array(targetCol1, targetCol2, targetCol3)
+	
+		for i = 1 to lastColumn
+			for each col in targetColumn
+				if tempWorksheet(1, i) = col Then
+					targetColumn = i
+				end if
+			next col
+		next i
+	
+		for j = LBound(tempWorksheet, 1) to UBound(tempWorksheet, 1)
+			if Ucase(tempWorksheet(i, targetColumn)) = UCase(searchTarget)
+				Search = j
+				Exit For
+			end if
+		next j
     
 End Function

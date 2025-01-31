@@ -6,7 +6,7 @@ Function IdentifyTitleRow(tempWorksheet As Worksheet)
 	titleRow = 0
 
 	For i = 1 To titleRowRange
-        lastColNum = IdentifyLastColumn(tempWorkSheet, i)
+        lastColNum = IdentifyLastColumn(tempWorksheet, i)
         If titleRow < lastColNum Then
             titleRow = lastColNum
         End If

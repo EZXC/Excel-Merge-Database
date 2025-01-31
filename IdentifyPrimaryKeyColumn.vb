@@ -9,7 +9,7 @@ Function IdentifyPrimaryKeyColumn(tempWorksheet As Worksheet)
     
     For i = 1 To lastColNum
         Select Case checkKeyCol(i)
-            Case "SN", "Serial Number", "Serial No", "Monitor SN", "SAMAccountName" '<--------------------------May need change when add new excel
+            Case "SN", "Serial Number", "Serial No", "SAMAccountName" '<--------------------------May need change when add new excel
                 keyColumn = i
                 Exit For
         End Select
